@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 自动扫描的包名 -->
+    <context:component-scan base-package="com.tom.aop.spring"/>
+
+    <!-- target -->
+  <!--  <bean id="service" class="com.tom.aop.spring.OrderServiceImpl"/>-->
+    <!-- advice -->
+    <bean id="advice" class="com.tom.aop.spring.ConcreteInterceptor"/>
+
+    <bean id="serviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="orderService"/>
+        <property name="interceptorNames" value="advice"/>
+        <property name="proxyTargetClass" value="false"/>
+    </bean>
+</beans>

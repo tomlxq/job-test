@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans.xsd
+http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+    <!-- 自动扫描的包名 -->
+    <context:component-scan base-package="com.tom.aop.spring"/>
+    <!-- target  如果增加了自动扫描包就不用在xml里增加bean配置-->
+    <!--<bean id="service" class="com.tom.aop.spring.OrderServiceImpl"/>-->
+    <!-- advice -->
+    <bean id="advice" class="com.tom.aop.spring.ConcreteInterceptor"/>
+
+    <!-- 配置切面 : proxy-target-class确定是否使用CGLIB -->
+    <aop:config proxy-target-class="true">
+        <!--
+            Spring自动代理 – 引入AspectJ
+            aop:pointcut : 切点定义
+            aop:advisor: 定义Spring传统AOP的切面,只支持一个pointcut/一个advice
+            aop:aspect : 定义AspectJ切面的,可以包含多个pointcut/多个advice
+            通过AspectJ引入Pointcut切点定义
+            Target/Advice同前
+            定义切面表达式
+            通过execution函数定义切点表达式(定义切点的方法切入)
+            execution(<访问修饰符> <返回类型><方法名>(<参数>)<异常>)
+            如:
+            1) execution(public * *(..)) # 匹配所有public方法.
+            2) execution(* com.xxx.dao.*(..)) # 匹配指定包下所有类方法(不包含子包)
+            3) execution(* com.xxx.dao..*(..)) # 匹配指定包下所有类方法(包含子包)
+            4) execution(* com.xxx.service.impl.*ServiceImple.*(..)) # 匹配指定类所有方法
+            5) execution(* com.xxx.service.OrderService+.*(..)) # 匹配实现特定接口所有类方法
+            6) execution(* save*(..)) # 匹配所有save开头的方法
+        -->
+        <aop:pointcut id="pointcut" expression="execution(* com.tom.aop.spring.*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
+    </aop:config>
+
+</beans>

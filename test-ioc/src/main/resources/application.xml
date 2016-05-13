@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+      ">
+    <!-- id 表示你这个组件的名字，class表示组件类 -->
+    <bean id="hello" class="com.tom.HelloApiImpl"/>
+    <bean id="bean1" name="alias1" class="com.tom.HelloApiImpl"/>
+    <!-- 如果id和name一样，IoC容器能检测到，并消除冲突 -->
+    <bean id="bean3" name="bean3" class="com.tom.HelloApiImpl"/>
+</beans>
