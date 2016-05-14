@@ -1,5 +1,12 @@
-找工作测试代码
-http://sishuok.com/forum/blogPost/list/2426.html#7018
+---
+tags: [spring,aop,ioc]
+projects: [test-aop,test-ioc]
+---
+:toc: left
+:icons: font
+:source-highlighter: prettify
+= 找工作测试代码
+
 spring基础
 核心容器：包括Core、Beans、Context、EL模块。
 ●Core模块：封装了框架依赖的最底层部分，包括资源访问、类型转换及一些常用工具类。
@@ -23,3 +30,6 @@ AOP、Aspects模块：
 ●Web-Struts模块：提供了与Struts无缝集成，Struts1.x 和Struts2.x都支持
  
 Test模块： Spring支持Junit和TestNG测试框架，而且还额外提供了一些基于Spring的测试功能，比如在测试Web框架时，模拟Http请求的功能。
+
+参见：
+http://sishuok.com/forum/blogPost/list/2426.html#7018
