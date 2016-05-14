@@ -8,8 +8,6 @@ projects: [test-aop,test-ioc]
 = 找工作测试代码
 
 = spring基础
-
-
 ////
 Java的数据结构相关的类实现原理，比如LinkedList，ArrayList，HashMap，TreeMap
 Java并发包当中的类，它们都有哪些作用，以及它们的实现原理，这些类就是java.concurrent包下面的
@@ -60,7 +58,7 @@ AOP、Aspects模块：
 * Web-Struts模块：提供了与Struts无缝集成，Struts1.x 和Struts2.x都支持
  
 Test模块： Spring支持Junit和TestNG测试框架，而且还额外提供了一些基于Spring的测试功能，比如在测试Web框架时，模拟Http请求的功能。
-
+////
 参见：
-
 http://sishuok.com/forum/blogPost/list/2426.html#7018
+////
