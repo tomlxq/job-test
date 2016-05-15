@@ -11,10 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.*;
 
-/**
- * @author zuoxiaolong
- *
- */
 public abstract class RandomArray {
      static Logger logger= LoggerFactory.getLogger(RandomArray.class);
     public static int[] random(int length){
