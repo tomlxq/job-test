@@ -10,35 +10,35 @@ IOC（Inverse of Control）可翻译为“控制反转”，但大多数人都�
 `src/main/java/spring_IOC/JavaBean.java`
 [source,java]
 ----
-include::{book-root}/src/main/java/spring_IOC/JavaBean.java[]
+include::{base-root}/src/main/java/spring_IOC/JavaBean.java[]
 ----
 
 实例化一个类，利用反射，将其注入值
 `src/main/java/spring_IOC/SetValueByReflection.java`
 [source,java]
 ----
-include::{book-root}/src/main/java/spring_IOC/SetValueByReflection.java[]
+include::{base-root}/src/main/java/spring_IOC/SetValueByReflection.java[]
 ----
 
 实例化一个类，利用反射，用个map来摸拟在xml获取的属性名及值
 `src/main/java/spring_IOC/SetValueByReflectionLoop.java`
 [source,java]
 ----
-include::{book-root}/src/main/java/spring_IOC/SetValueByReflectionLoop.java[]
+include::{base-root}/src/main/java/spring_IOC/SetValueByReflectionLoop.java[]
 ----
 
 加载xml文件，利用反射，将其注入值
 `src/main/resources/config.xml`
 [source,xml]
 ----
-include::{book-root}/src/main/resources/config.xml[]
+include::{base-root}/src/main/resources/config.xml[]
 ----
 
 Bean工厂主要用来解析xml文件，获取属性名及值，然后利用反射，将其注入值
 `src/main/java/spring_IOC/BeanFactory.java`
 [source,java]
 ----
-include::{book-root}/src/main/java/spring_IOC/BeanFactory.java[]
+include::{base-root}/src/main/java/spring_IOC/BeanFactory.java[]
 ----
 
 可以看到，虽然在main()方法中没有对属性赋值，但属性值已经被注入，在BeanFactory类中的Class bean = Class.forName(cls.getText()); 通过类名来获取对应的类，mSet.invoke(obj, value);通过invoke方法来调用特定对象的特定方法，实现的原理都是基于Java的反射机制
