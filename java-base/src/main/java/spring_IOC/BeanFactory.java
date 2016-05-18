@@ -2,18 +2,12 @@ package spring_IOC;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
-import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.beans.BeanInfo;
-import java.beans.IntrospectionException;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
 import java.io.InputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -113,57 +107,5 @@ public class BeanFactory {
         JavaBean javaBean = (JavaBean) factory.getBean("javaBean");
         System.out.println("userName=" + javaBean.getUsername());
         System.out.println("password=" + javaBean.getPassword());
-        try {
-            Class bean = Class.forName("spring_IOC.JavaBean");
-            Object obj = bean.newInstance();
-            //获取对应class信息
-            BeanInfo info = Introspector.getBeanInfo(bean);
-            // 遍历指定类的属性
-            PropertyDescriptor[] propertys = info.getPropertyDescriptors();
-            for (int j = 0; j < propertys.length; j++) {
-                System.out.println("属性：" + propertys[j].getName());
-            }
-            //获取其属性描述
-            java.beans.PropertyDescriptor pd[] = info.getPropertyDescriptors();
-            Method mSet = null;
-            for (int k = 0; k < pd.length; k++) {
-                if (!pd[k].getName().equals("class")) {
-                    mSet = pd[k].getWriteMethod();
-                    log.info("{} {}", pd[k].getWriteMethod().getName(), pd[k].getReadMethod().getName());//setPassword getPassword
-                    mSet.invoke(obj, "567");//利用反射将567注入到bean　这儿实验将每个set方法的值都设置为567
-                }
-            }
-            //将对象放入beanMap中，其中key为id值，value为对象
-            JavaBean javaBean1 = (JavaBean) obj;
-            System.out.println("userName=" + javaBean1.getUsername());
-            System.out.println("password=" + javaBean1.getPassword());
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IntrospectionException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        try {
-            JavaBean javaBean3 = new JavaBean();
-            //获取指定类的指定方法，
-            Class c = Class.forName("spring_IOC.JavaBean");
-            Method method = c.getMethod("setUsername", new Class[]{String.class});
-            //对带有指定参数的指定对象调用由此 Method 对象表示的底层方法,调用对象javaBean的setuserName方法，参数为"hello world"
-            method.invoke(javaBean3, "hello world");
-            System.out.println(javaBean3.getUsername());
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
     }
 }
