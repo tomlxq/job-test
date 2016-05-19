@@ -110,7 +110,7 @@ include::{base-root}/src/main/java/spring_annotation/ClassPathXMLApplicationCont
 include::{base-root}/src/test/java/AnnotationTest.java[]
 ----
 
-
+____
 15:43:01.280 [main] INFO  spring_annotation.UserService - userDao spring_annotation.UserDaoImpl
 15:43:01.286 [main] INFO  spring_annotation.UserService - userService spring_annotation.UserService
 15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao1
@@ -119,4 +119,6 @@ include::{base-root}/src/test/java/AnnotationTest.java[]
 15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
 15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
 15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+____
+
 

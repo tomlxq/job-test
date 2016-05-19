@@ -7,7 +7,7 @@ projects: [java-base,test-aop,test-ioc]
 :source-highlighter: prettify
 :image-width: 500
 
-= Spring Security and Angular JS
+= Spring,java 基础
 
 include::./README_ANNOTATION.adoc[leveloffset=+1]
 include::./README_IOC.adoc[leveloffset=+1]
