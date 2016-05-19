@@ -4,7 +4,7 @@
 :image-width: 500
 :base-root: .
 
-==== spring注解
+==== 说说spring注解
 注解（annotation）其实是一种接口，通过java的反射机制相关的API来访问annotation信息。Java语言解释器会在工作时忽略这些annotation，因此在JVM中这些annotation是不会被处理的，只能通过配套的工具才能对这些annotation类型的信息进行访问和处理。
 annotation的类型使用关键字@interface。它继承了java.lang.annotation.Annotation接口，而不是申明了一个interface。
 Annotation类型、方法定义是独特的、受限制的。Annotation类型的方法必须申明为无参数、无异常抛出的。方法后面可以使用default和一个默认数值来申明成员的默认值，null不能作为成员的默认值。
@@ -110,15 +110,15 @@ include::{base-root}/src/main/java/spring_annotation/ClassPathXMLApplicationCont
 include::{base-root}/src/test/java/AnnotationTest.java[]
 ----
 
-____
-15:43:01.280 [main] INFO  spring_annotation.UserService - userDao spring_annotation.UserDaoImpl
-15:43:01.286 [main] INFO  spring_annotation.UserService - userService spring_annotation.UserService
-15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao1
-15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao2
-15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
-15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
-15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
-15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
-____
+### 打印出结果
+            15:43:01.280 [main] INFO  spring_annotation.UserService - userDao spring_annotation.UserDaoImpl
+            15:43:01.286 [main] INFO  spring_annotation.UserService - userService spring_annotation.UserService
+            15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao1
+            15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao2
+            15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+            15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+            15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+            15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
 
+源代码访问：  https://github.com/tomlxq/job-test/tree/master/java-base[https://github.com/tomlxq/job-test/tree/master/java-base]
 
