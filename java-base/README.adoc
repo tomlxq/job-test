@@ -1,46 +1,16 @@
-:toc:
+---
+tags: [spring,java基础,spring mvc,spring反射与注解]
+projects: [java-base,test-aop,test-ioc]
+---
+:toc: left
 :icons: font
 :source-highlighter: prettify
 :image-width: 500
-:base-root: .
 
-=== spring注入原理
+= Spring,java 基础
 
-IOC（Inverse of Control）可翻译为“控制反转”，但大多数人都习惯将它称为“依赖注入”。在Spring中，通过IOC可以将实现类 、参数信息等配置在其对应的配置文件中 ，那么当需要更改实现类或参数信息时，只需要修改配置文件即可，这种方法在上例的基础上更进一步的降低了类与类之间的耦合。我们还可以对某对象所需要的其它对象进行注入 ，这种注入都是在配置文件中做的，Spring的IOC的实现原理利用的就是Java的反射机制，Spring还充当了工厂的角色，我们不需要自己建立工厂类 。Spring的工厂类会帮我们完成配置文件的读取、利用反射机制注入对象等工作，我们可以通过bean的名称获取对应的对象。
+include::./README_ANNOTATION.adoc[leveloffset=+1]
+include::./README_IOC.adoc[leveloffset=+1]
 
-定义一个bean
-`src/main/java/spring_ioc/JavaBean.java`
-[source,java]
-----
-include::{base-root}/src/main/java/spring_ioc/JavaBean.java[]
-----
 
-实例化一个类，利用反射，将其注入值
-`src/main/java/spring_ioc/SetValueByReflection.java`
-[source,java]
-----
-include::{base-root}/src/main/java/spring_ioc/SetValueByReflection.java[]
-----
 
-实例化一个类，利用反射，用个map来摸拟在xml获取的属性名及值
-`src/main/java/spring_ioc/SetValueByReflectionLoop.java`
-[source,java]
-----
-include::{base-root}/src/main/java/spring_ioc/SetValueByReflectionLoop.java[]
-----
-
-加载xml文件，利用反射，将其注入值
-`src/main/resources/config.xml`
-[source,xml]
-----
-include::{base-root}/src/main/resources/config.xml[]
-----
-
-Bean工厂主要用来解析xml文件，获取属性名及值，然后利用反射，将其注入值
-`src/main/java/spring_ioc/BeanFactory.java`
-[source,java]
-----
-include::{base-root}/src/main/java/spring_ioc/BeanFactory.java[]
-----
-
-可以看到，虽然在main()方法中没有对属性赋值，但属性值已经被注入，在BeanFactory类中的Class bean = Class.forName(cls.getText()); 通过类名来获取对应的类，mSet.invoke(obj, value);通过invoke方法来调用特定对象的特定方法，实现的原理都是基于Java的反射机制
