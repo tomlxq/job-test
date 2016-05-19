@@ -1,4 +1,4 @@
-package spring_IOC;
+package spring_ioc;
 
 /**
  * Created by tom on 2016/5/18.

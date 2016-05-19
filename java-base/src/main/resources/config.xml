@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <beans xmlns="http://www.springframework.org/schema/beans">
-    <bean id="javaBean" class="spring_IOC.JavaBean">
+    <bean id="javaBean" class="spring_ioc.JavaBean">
         <property name="username" value="tom"/>
 
         <property name="password" value="123"/>
