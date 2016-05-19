@@ -1,0 +1,122 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+:base-root: .
+
+==== spring注解
+注解（annotation）其实是一种接口，通过java的反射机制相关的API来访问annotation信息。Java语言解释器会在工作时忽略这些annotation，因此在JVM中这些annotation是不会被处理的，只能通过配套的工具才能对这些annotation类型的信息进行访问和处理。
+annotation的类型使用关键字@interface。它继承了java.lang.annotation.Annotation接口，而不是申明了一个interface。
+Annotation类型、方法定义是独特的、受限制的。Annotation类型的方法必须申明为无参数、无异常抛出的。方法后面可以使用default和一个默认数值来申明成员的默认值，null不能作为成员的默认值。
+
+## 元注解@Target,@Retention,@Documented,@Inherited
+* @Target表示该注解用于什么地方
+* @Retention表示在什么级别保存改注解信息
+* @Documented表示将此注解包含在javadoc中
+* @Inherited表示允许子类继承父类中的注解
+
+使用注解主要是在需要使用Spring框架的时候，特别是使用SpringMVC。因为这时我们会发现它的强大之处：预处理。
+注解实际上相当于一种标记，它允许你在运行时(源码、文档、类文件我们就不讨论了)动态地对拥有该标记的成员进行操作。
+实现注解需要三个条件(我们讨论的是类似于Spring自动装配的高级应用)：注解声明、使用注解的元素、操作使用注解元素的代码。
+
+### 注解声明
+
+`src/main/java/spring_annotation/HelloAnnotation.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/HelloAnnotation.java[]
+----
+
+### 使用注解的元素
+
+`src/main/java/spring_annotation/Hello.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/Hello.java[]
+----
+
+### 操作使用注解元素的代码, 即类中的main函数
+
+注解本身不做任何事情，只是像xml文件一样起到配置作用。注解代表的是某种业务意义，spring中@Resource注解简单解析：首先解析类的所有属性，判断属性上面是否存在这个注解，如果存在这个注解，再根据搜索规则来取得这个bean，然后通过反射注入。
+
+=== spring中注解的实现原理
+下面我们来实现一个service层注入dao的实例
+
+### 注解声明
+
+`src/main/java/spring_annotation/TomResourceAnnotation.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/TomResourceAnnotation.java[]
+----
+
+### 创建一个实体对象，这于用于存用户信息，在实际的应用中，常常对应数据库的一个表
+
+`src/main/java/spring_annotation/User.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/User.java[]
+----
+
+### 创建一个持久层接口，实际上可以不用创建
+
+`src/main/java/spring_annotation/UserDao.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/UserDao.java[]
+----
+
+### 实现持久层接口
+实际应用中常和JPA,MyBatis,Ibatis打交道，这里只是返一个对象而己
+
+`src/main/java/spring_annotation/UserDaoImpl.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/UserDaoImpl.java[]
+----
+
+### 实现服务层逻辑
+实际应用中是由MVC框架中调用服务层函数
+本类中，创建了四个注解：字段上的注解、字段上的注解,配置name属性、set方法上的注解、set方法上的注解,配置name属性
+然后分别从四个函数中分别取值
+
+`src/main/java/spring_annotation/UserService.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/UserService.java[]
+----
+
+### 创建配置依赖文件
+实际应用中，我们不会这么做，而是通过包扫描，自动实现配置
+`src/main/resources/annotation.xml`
+[source,xml]
+----
+include::{base-root}/src/main/resources/annotation.xml[]
+----
+
+### 创建解析配置并管理BEAN的上下文件类
+创建解析配置文件及利用反射机制实现对属性和setXXX注入,实际应用中，spring己为我们做好了这一切
+`src/main/java/spring_annotation/ClassPathXMLApplicationContext.java`
+[source,java]
+----
+include::{base-root}/src/main/java/spring_annotation/ClassPathXMLApplicationContext.java[]
+----
+
+现在我们创建一个测试类，检查是不是达到我们的预期
+
+`src/test/java/AnnotationTest.java`
+[source,java]
+----
+include::{base-root}/src/test/java/AnnotationTest.java[]
+----
+
+
+15:43:01.280 [main] INFO  spring_annotation.UserService - userDao spring_annotation.UserDaoImpl
+15:43:01.286 [main] INFO  spring_annotation.UserService - userService spring_annotation.UserService
+15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao1
+15:43:01.300 [main] DEBUG spring_annotation.UserService - userDao2
+15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
+
