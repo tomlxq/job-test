@@ -1,4 +1,4 @@
-package spring_IOC;
+package spring_ioc;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
