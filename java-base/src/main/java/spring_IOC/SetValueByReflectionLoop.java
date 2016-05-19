@@ -1,4 +1,4 @@
-package spring_IOC;
+package spring_ioc;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,7 +24,7 @@ public class SetValueByReflectionLoop {
         map.put("username", "tomLuo");
         map.put("password", "954");
 
-        Class bean = Class.forName("spring_IOC.JavaBean");
+        Class bean = Class.forName("spring_ioc.JavaBean");
         Object obj = bean.newInstance();
         //获取对应class信息
         BeanInfo info = Introspector.getBeanInfo(bean);

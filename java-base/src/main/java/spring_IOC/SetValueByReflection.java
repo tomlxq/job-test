@@ -1,4 +1,4 @@
-package spring_IOC;
+package spring_ioc;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,7 +13,7 @@ public class SetValueByReflection {
     public static void main(String[] args) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         JavaBean bean = new JavaBean();
         //获取指定类的指定方法，
-        Class c = Class.forName("spring_IOC.JavaBean");
+        Class c = Class.forName("spring_ioc.JavaBean");
         Method method = c.getMethod("setUsername", new Class[]{String.class});
         //对带有指定参数的指定对象调用由此 Method 对象表示的底层方法,调用对象javaBean的setuserName方法，参数为"hello world"
         method.invoke(bean, "hello world");
