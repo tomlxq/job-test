@@ -120,5 +120,5 @@ include::{base-root}/src/test/java/AnnotationTest.java[]
             15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
             15:43:01.305 [main] DEBUG spring_annotation.UserService - User{id=null, name='tomLuo', password='789', mail='beauty9235@gmail.com'}
 
-源代码访问：  https://github.com/tomlxq/job-test/tree/master/java-base[https://github.com/tomlxq/job-test/tree/master/java-base]
+> 源代码访问： https://github.com/tomlxq/job-test/tree/master/java-base[https://github.com/tomlxq/job-test/tree/master/java-base]
 

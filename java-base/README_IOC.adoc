@@ -44,3 +44,5 @@ include::{base-root}/src/main/java/spring_ioc/BeanFactory.java[]
 ----
 
 可以看到，虽然在main()方法中没有对属性赋值，但属性值已经被注入，在BeanFactory类中的Class bean = Class.forName(cls.getText()); 通过类名来获取对应的类，mSet.invoke(obj, value);通过invoke方法来调用特定对象的特定方法，实现的原理都是基于Java的反射机制
+
+> 源代码访问：  https://github.com/tomlxq/job-test/tree/master/java-base[https://github.com/tomlxq/job-test/tree/master/java-base]
