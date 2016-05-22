@@ -265,7 +265,7 @@ include::{base-root}/src/main/resources/spring_aop_aspectj_annotation.xml[]
 `/src/test/java/SpringAopAspectjAnnotationTest.java`
 [source,java]
 ----
-include::{base-root}\src\test\java\SpringAopAspectjAnnotationTest.java[{base-root}\src\test\java\SpringAopAspectjAnnotationTest.java]
+include::{base-root}/src/test/java/SpringAopAspectjAnnotationTest.java[]
 ----
 
 # 总结

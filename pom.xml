@@ -12,6 +12,7 @@
         <module>test-aop</module>
         <module>test-ioc</module>
         <module>java-base</module>
+        <module>asciidoc-study</module>
     </modules>
     <properties>
         <java.version>1.8</java.version>
