@@ -7,7 +7,7 @@
 http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
 http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
     <!-- 批量扫描@Component -->
-    <context:component-scan base-package="com.tom.aop.*"/>
+    <context:component-scan base-package="com.tom.aop.spring,com.tom.aop.aspectj_aop"/>
     <!-- 启用注解自动代理@Aspect-->
     <aop:aspectj-autoproxy/>
 </beans>

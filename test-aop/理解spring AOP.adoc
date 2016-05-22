@@ -1,0 +1,280 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+:base-root: .
+
+# AOP 的基本概念
+
+AOP 是 Aspect Oriented Programming 的缩写，意思是面向方面的编程。我们在系统开发中可以提取出很多共性的东西作为一个 Aspect，可以理解为在系统中，我们需要很多次重复实现的功能。比如计算某个方法运行了多少毫秒，判断用户是不是具有访问权限，用户是否已登录，数据的事务处理，日志记录等等。
+一般我们描述一个故事，都会说什么时间什么地点发生了什么事情，那 Join Point 的意思是，发生的地点，Advice 就是发生了什么事，Aspect 就是这个故事的整体，包含了 Join Point 和 Advice。PointCut 又把地点进行了规律性的总结，比如使用正则表达式 (com.example.service.*，即所有在 service 包下面的方法），把所有 Advice 发生的地点进行描述。
+读者现在应该已经大概了解了 AOP 的基本概念，下面我们再来详细介绍一下：
+
+* Join Point：表示在程序中明确定义的执行点，典型的 Join Point 包括方法调用，对类成员的访问以及异常处理程序块的执行等等，它自身还可以嵌套其它 Join Point。
+* PointCut：表示一组 Join Point，这些 Join Point 或是通过逻辑关系组合起来，或是通过通配、正则表达式等方式集中起来，它定义了相应的 Advice 将要发生的地方。
+* Advice：Advice 定义了在 PointCut 里面定义的程序点具体要做的操作，它通过 before、after 和 around 来区别是在每个 Join Point 之前、之后还是代替执行的代码。
+
+AOP 代理其实是由 AOP 框架动态生成的一个对象，该对象可作为目标对象使用。AOP 代理包含了目标对象的全部方法，但 AOP 代理中的方法与目标对象的方法存在差异：AOP 方法在特定切入点添加了增强处理，并回调了目标对象的方法。
+
+AOP应用到项目中的好处,能够将与业务逻辑不相关的代码（如：日志、权限等）分离出来，减小相关业务类负担，并能让一些通用需求（如：事务）得到更广泛的复用。
+AOP的实现是利用了java核心的代理机制，分静态代理与动态代理。
+
+# 静态代理
+
+`/src/main/java/com/tom/proxy/IBusiness.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/proxy/IBusiness.java[]
+----
+
+`/src/main/java/com/tom/proxy/BusinessImpl.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/proxy/BusinessImpl.java[]
+----
+
+`/src/main/java/com/tom/proxy/BusinessProxy.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/proxy/BusinessProxy.java[]
+----
+打印结果:
+
+            事务、日志、权限等操作
+            业务主体部分
+            事务、日志、权限等操作
+
+静态代理实现了AOP，BusinessProxy代理了BusinessImpl的doBusiness方法。但是静态代理一般不能满足我们项目开发的需求，如果业务需求很多它得为每一个业务方法一一做代理
+
+# 动态代理
+`/src/main/java/com/tom/proxy/BusinessHandler.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/proxy/BusinessHandler.java[]
+----
+
+需实现一个InvocationHandler的接口，重写invoke(Object proxy,Method method,Object[] args)方法，代理对象实例由Proxy.newProxyInstance(ClassLoader loader,Class interfaces,InvocationHandler h)方法生成
+打印结果:
+
+            事务、日志、权限等操作
+            业务主体部分
+            事务、日志、权限等操作
+
+#　spring对AOP的支持
+
+Spring AOP 需要对目标类进行增强，也就是生成新的 AOP 代理类.
+
+先看一个例子
+
+## 业务接口
+`/src/main/java/com/tom/aop/spring/OrderService.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/aop/spring/OrderService.java[]
+----
+## 业务接口实现
+`/src/main/java/com/tom/aop/spring/OrderServiceImpl.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/aop/spring/OrderServiceImpl.java[]
+----
+## 定义Advice
+`/src/main/java/com/tom/aop/spring/ConcreteInterceptor.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/aop/spring/ConcreteInterceptor.java[]
+----
+AOP联盟为通知Advice定义了org.aopalliance.aop.Advice接口,
+Spring在Advice的基础上,根据通知在目标方法的连接点位置,扩充为以下五类:
+|===
+|通知|接口|描述
+
+|前置通知|MethodBeforeAdvice|在目标方法执行前实施增强
+|后置通知|AfterReturningAdvice|…执行后实施增强
+|环绕通知|MethodInterceptor|..执行前后实施增强
+|异常抛出通知|ThrowsAdvice|…抛出异常后实施增强
+|引介通知|IntroductionInterceptor|在目标类中添加新的方法和属性(少用)
+|===
+## 定义spring XML文件
+`/src/main/resources/spring_aop.xml`
+[source,java]
+----
+include::{base-root}/src/main/resources/spring_aop.xml[]
+----
+
+* Joinpoint：它定义在哪里加入你的逻辑功能，对于Spring AOP，Jointpoint指的就是Method。
+* Advice：特定的Jointpoint处运行的代码，对于Spring AOP 来讲，有Before advice、AfterreturningAdvice、ThrowAdvice、AroundAdvice(MethodInteceptor)等。
+* Pointcut：一组Joinpoint，就是说一个Advice可能在多个地方织入，
+* Aspect：实际是Advice和Pointcut的组合，但是Spring AOP 中的Advisor也是这样一个东西，但是Spring中为什么叫Advisor而不叫做Aspect。
+* Target：被通知的对象。
+* Proxy：将通知应用到目标对象后创建的对象
+* Weaving：将Aspect加入到程序代码的过程，对于Spring AOP，由ProxyFactory或者ProxyFactoryBean负责织入动作。
+
+
+注意上面我用了基于注解的装配
+你也可以这样实现,注意里面没有 **@Service("orderService")**
+[source,java]
+----
+public class OrderServiceImpl implements OrderService {
+    @Override
+    public void save() {
+        System.out.println("添加...");
+    }
+    @Override
+    public Integer delete(Integer param) {
+        System.out.println("删除...");
+        return param;
+    }
+}
+----
+然后在xml中，注意没有**<context:component-scan base-package="com.tom.aop.spring"/>**
+[source,xml]
+----
+    <!-- target -->
+    <bean id="orderService" class="com.tom.aop.spring.OrderServiceImpl"/>
+    <!-- advice -->
+    <bean id="advice" class="com.tom.aop.spring.ConcreteInterceptor"/>
+    <bean id="serviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="orderService"/>
+        <property name="interceptorNames" value="advice"/>
+        <property name="proxyTargetClass" value="false"/>
+    </bean>
+----
+
+## 最后我们写一个测试类SpringAOPTest
+
+`/src/test/java/SpringAOPTest.java`
+[source,java]
+----
+include::{base-root}/src/test/java/SpringAOPTest.java[]
+----
+打印结果
+
+                在目标方法执行前实施增强
+                添加...
+                在目标方法执行后实施增强
+                在目标方法执行前实施增强
+                删除...
+                在目标方法执行后实施增强
+
+这种方式的缺陷在于每个Target都必须手动指定ProxyFactoryBean对其代理(不能批量指定),而且这种方式会在Spring容器中存在两份Target对象(代理前/代理后),浪费资源,且容易出错(比如没有指定@Qualifier).必须指定使用代理对象名称, 否则不予代理
+
+# Spring自动代理 – 引入AspectJ
+## 定义spring XML文件
+`/src/main/resources/spring_aop_aspectj.xml`
+[source,xml]
+----
+include::{base-root}/src/main/resources/spring_aop_aspectj.xml[]
+----
+* aop:pointcut : 切点定义
+* aop:advisor: 定义Spring传统AOP的切面,只支持一个pointcut/一个advice
+* aop:aspect : 定义AspectJ切面的,可以包含多个pointcut/多个advice
+
+通过AspectJ引入Pointcut切点定义
+Target/Advice同前
+定义切面表达式
+通过execution函数定义切点表达式(定义切点的方法切入)
+execution(<访问修饰符> <返回类型><方法名>(<参数>)<异常>)
+如:
+
+1. execution(public * *(..)) # 匹配所有public方法.
+2. execution(* com.xxx.dao.*(..)) # 匹配指定包下所有类方法(不包含子包)
+3. execution(* com.xxx.dao..*(..)) # 匹配指定包下所有类方法(包含子包)
+4. execution(* com.xxx.service.impl.*ServiceImple.*(..)) # 匹配指定类所有方法
+5. execution(* com.xxx.service.OrderService+.*(..)) # 匹配实现特定接口所有类方法
+6. execution(* save*(..)) # 匹配所有save开头的方法
+
+## 测试类SpringAopAspectjTest.java
+`/src/test/java/SpringAopAspectjTest.java`
+[source,java]
+----
+include::{base-root}/src/test/java/SpringAopAspectjTest.java[]
+----
+
+打印结果同上.
+
+# Spring自动代理 – 引入AspectJ -　多个通知
+## 定义通知
+`/src/main/java/com/tom/aop/aspectj_aop/Aspect.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/aop/aspectj_aop/Aspect.java[]
+----
+>  前置通知小结
+前置通知会保证在目标方法执行前执行;
+前置通知默认不能阻止目标方法执行(但如果通知抛出异常,则目标方法无法执行);
+可以通过JoinPoint参数获得当前拦截对象和方法等信息.
+
+## 定义spring XML文件
+`/src/main/resources/spring_aop_aspectj_multimethod.xml`
+[source,xml]
+----
+include::{base-root}/src/main/resources/spring_aop_aspectj_multimethod.xml[]
+----
+
+## 测试类SpringAopAspectjMultimethodTest.java
+`/src/test/java/SpringAopAspectjMultimethodTest.java`
+[source,java]
+----
+include::{base-root}/src/test/java/SpringAopAspectjMultimethodTest.java[]
+----
+
+打印结果
+
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                前置增强before1
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                前置增强before2 method-execution
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                环绕增强Begin method: execution(OrderService.save()), args: []
+                添加...
+                环绕增强After result: null
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                后置增强, 结果为 null
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                最终通知, 释放资源
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                前置增强before1
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                前置增强before2 method-execution
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                环绕增强Begin method: execution(OrderService.delete(..)), args: [88]
+                删除...
+                环绕增强After result: 88
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                后置增强, 结果为 88
+                15:11:48 DEBUG o.s.b.f.s.DefaultListableBeanFactory - Returning cached instance of singleton bean 'advice'
+                最终通知, 释放资源
+
+# Spring自动代理 – 引入AspectJ -　注解自动代理
+## 定义基于注解的通知
+`/src/main/java/com/tom/aop/aspectj_aop/CustomAspect.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/tom/aop/aspectj_aop/CustomAspect.java[]
+----
+
+## 定义spring XML文件
+`/src/main/resources/spring_aop_aspectj_annotation.xml`
+[source,xml]
+----
+include::{base-root}/src/main/resources/spring_aop_aspectj_annotation.xml[]
+----
+
+## 测试类SpringAopAspectjMultimethodTest.java
+`/src/test/java/SpringAopAspectjAnnotationTest.java`
+[source,java]
+----
+include::{base-root}/src/test/java/SpringAopAspectjAnnotationTest.java[]
+----
+
+# 总结
+Spring 的 AOP 代理由 Spring 的 IoC 容器负责生成、管理，其依赖关系也由 IoC 容器负责管理。因此，AOP 代理可以直接使用容器中的其他 Bean 实例作为目标，这种关系可由 IoC 容器的依赖注入提供。
+纵观 AOP 编程，其中需要程序员参与的只有 3 个部分：
+定义普通业务组件。
+定义切入点，一个切入点可能横切多个业务组件。
+定义增强处理，增强处理就是在 AOP 框架为普通业务组件织入的处理动作。
+Spring AOP完成了横向的抽象，使开发人员只注重业务的编写，日志\权限\事务管理的特性，我们利用spring AOP编程完成对这些业务的描述，与我们所编写的业务分离开来，很好的体现的高内聚，低耦合的编程思想．
+
+# Reference:
+* **Spring AOP 实现原理与 CGLIB 应用** https://www.ibm.com/developerworks/cn/java/j-lo-springaopcglib/

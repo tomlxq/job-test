@@ -2,7 +2,6 @@ import com.tom.aop.spring.OrderService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -17,7 +16,7 @@ public class SpringAopAspectjTest {
     private OrderService orderService;
 
     @Test
-    public void client() {
+    public void testOrder()  {
         orderService.save();
         orderService.delete(88);
     }
