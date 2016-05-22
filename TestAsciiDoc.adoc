@@ -77,5 +77,5 @@ hanmeimei,female,21,teacher
 
 [format="csv", options="header"]
 |===
-include::customers.csv
+include::customers.csv[]
 |===
