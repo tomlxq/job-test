@@ -276,5 +276,5 @@ Spring 的 AOP 代理由 Spring 的 IoC 容器负责生成、管理，其依赖�
 定义增强处理，增强处理就是在 AOP 框架为普通业务组件织入的处理动作。
 Spring AOP完成了横向的抽象，使开发人员只注重业务的编写，日志\权限\事务管理的特性，我们利用spring AOP编程完成对这些业务的描述，与我们所编写的业务分离开来，很好的体现的高内聚，低耦合的编程思想．
 
-# Reference:
+### Reference:
 * **Spring AOP 实现原理与 CGLIB 应用** https://www.ibm.com/developerworks/cn/java/j-lo-springaopcglib/
