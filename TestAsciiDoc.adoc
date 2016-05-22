@@ -68,8 +68,14 @@ video::path/to/audio.ogg[]
 
 [format="csv", options="header"]
 |===
-lilei,litao,tomluo
-doctor,teacher,beauty
+name,sex,age,career
+lilei,male,36,doctor
+litao,male,34,teacher
+tomluo,male,35,engineer
+hanmeimei,female,21,teacher
 |===
 
-
+[format="csv", options="header"]
+|===
+include::customers.csv
+|===
