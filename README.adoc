@@ -63,6 +63,6 @@ Test模块： Spring支持Junit和TestNG测试框架，而且还额外提供了�
 http://sishuok.com/forum/blogPost/list/2426.html#7018
 ////
 
-include::./java-base/README.adoc[leveloffset=+1]
+include::java-base/README.adoc[leveloffset=+1]
 include::./test-aop/README.md[leveloffset=+1]
 include::./test-ioc/README.adoc[leveloffset=+1]
