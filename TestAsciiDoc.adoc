@@ -35,14 +35,36 @@ puts "Hello, world!"
 
 ----
 这里是简书晚报
+
 ----
 
 [quote,tomluo]
 ----
 这里是简书晚报
+
 ----
 
 [quote,tomluo,<<简书>>]
 ----
 这里是简书晚报
+
 ----
+
+image::http://upload-images.jianshu.io/upload_images/568470-65dd4f193d718dff.jpg[]
+
+.简书晚报
+image::http://upload-images.jianshu.io/upload_images/568470-65dd4f193d718dff.jpg[width=300,height=250]
+
+audio::path/to/audio.ogg[]
+
+video::path/to/audio.ogg[]
+
+.表格
+|===
+|column 1 |column 2 |column 3
+
+|column 1 |column 2 |column 3
+
+|column 1 |column 2 |column 3
+|===
+
