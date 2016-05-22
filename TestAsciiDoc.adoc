@@ -79,3 +79,24 @@ hanmeimei,female,21,teacher
 |===
 include::customers.csv[]
 |===
+
+标注
+
+代码块
+
+:source-highlighter: coderay
+:icons: font
+
+.hello-world.rb
+[source,ruby]
+----
+require 'sinatra' # <1>
+
+get '/hi' do　 # <2>
+    "hello world!"  # <3>
+end
+----
+<1> library import
+<2> URL mapping
+<3> Content for response
+
