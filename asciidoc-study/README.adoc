@@ -1,0 +1,144 @@
+:toc:
+:icons: font
+:source-highlighter: prettify
+:image-width: 500
+:base-root: .
+
+= Hell, TomLuo
+:toc:
+
+== Hell, TomLuo
+
+=== Hell, TomLuo
+
+==== Hell, TomLuo
+
+tomLuo <21429503@qq.com>
+
+:appversion: 1.0.0
+
+An introduction to http://asciidoc.org[AsciiDoc]
+
+== 第一段
+
+* item1
+* item2
+
+[source,ruby]
+----
+puts "Hello, world!"
+----
+加' +'为换行
+
+这里是简书晚报，每天汇集当日好文~点击标题查看完整文章 +
+点击作者名字关注后可收集作者更多动态哟~
+
+= 文档标题
+:hardbreak:
+
+第一行
+第二行
+
+----
+这里是简书晚报
+
+----
+
+[quote,tomluo]
+----
+这里是简书晚报
+
+----
+
+[quote,tomluo,<<简书>>]
+----
+这里是简书晚报
+
+----
+
+image::http://upload-images.jianshu.io/upload_images/568470-65dd4f193d718dff.jpg[]
+
+.简书晚报
+image::http://upload-images.jianshu.io/upload_images/568470-65dd4f193d718dff.jpg[width=300,height=250]
+
+audio::path/to/audio.ogg[]
+
+video::path/to/audio.ogg[]
+
+.表格
+|===
+|column 1 |column 2 |column 3
+|column 1 |column 2 |column 3
+|column 1 |column 2 |column 3
+|===
+
+[format="csv", options="header"]
+|===
+name,sex,age,career
+lilei,male,36,doctor
+litao,male,34,teacher
+tomluo,male,35,engineer
+hanmeimei,female,21,teacher
+|===
+
+[format="csv", options="header"]
+|===
+include::customers.csv[]
+|===
+
+标注
+
+代码块
+
+:source-highlighter: coderay
+:icons: font
+
+.hello-world.rb
+[source,ruby]
+----
+require 'sinatra' # <1>
+
+get '/hi' do　 # <2>
+    "hello world!"  # <3>
+end
+----
+<1> library import
+<2> URL mapping
+<3> Content for response
+
+### 菜价
+
+* 原汁海螺　28　元
+* 原汁扇贝　10　元
+* 海捕大虾　38　元　
+footnote:[按个计价]
+
+:fonts: icon
+
+TIP: Pro tip...
+
+IMPORTANT: don't forget...
+
+WARNING: watch out for...
+
+CAUTION: Ensure that...
+
+[shout]
+----
+This time is now....
+----
+
+# test include
+
+[source,java]
+-------------------------------------------
+include::./src/main/java/com/example/Hello.java[]
+-------------------------------------------
+
+`/src/main/java/com/example/Hello.java`
+[source,java]
+----
+include::{base-root}/src/main/java/com/example/Hello.java[]
+----
+
+<1> Print statement.
