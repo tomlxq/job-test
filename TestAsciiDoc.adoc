@@ -100,3 +100,6 @@ end
 <2> URL mapping
 <3> Content for response
 
+* 原汁海螺　28　元
+* 原汁扇贝　10　元
+* 海捕大虾　38　元　footnote:[按个计价]
